@@ -1,0 +1,350 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: 600;
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.section {
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+#list-section {
+    flex: 1;
+    min-width: 300px;
+    max-width: 40%;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+#list-section h2, #map-section h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.2em;
+    color: #4CAF50;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.filters {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#filter-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.95em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+#filter-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 1px 5px rgba(76,175,80,0.2);
+}
+
+.filter-controls {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+}
+
+/* Estilo para el campo de búsqueda de ciudad */
+.city-search {
+    width: 100%;
+}
+
+#city-autocomplete {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.95em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+#city-autocomplete:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 1px 5px rgba(76,175,80,0.2);
+}
+
+/* Ocultamos los estilos antiguos de autocompletado */
+.autocomplete-results,
+.autocomplete-results.show,
+.autocomplete-item,
+.autocomplete-item:hover,
+.autocomplete-item.selected,
+#city-filter {
+    display: none;
+}
+
+.list-container {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+#establishment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+#establishment-list li {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: white;
+    margin: 5px 8px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+#establishment-list li:hover {
+    background-color: #f0f7f0;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+#establishment-list li:active {
+    transform: translateY(0);
+}
+
+#establishment-list li strong {
+    display: block;
+    font-size: 1em;
+    margin-bottom: 3px;
+    color: #2e7d32;
+}
+
+#establishment-list li span {
+    font-size: 0.85em;
+    color: #757575;
+}
+
+#establishment-list li small {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #9e9e9e;
+}
+
+#map-section {
+    flex: 2;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#map-section h2 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 500;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 0;
+    font-size: 1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#map { 
+    height: 100%;
+    width: 100%;
+    border: none;
+    flex-grow: 1;
+    z-index: 1;
+}
+
+/* Estilos para el popup de Leaflet */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    padding: 3px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.leaflet-popup-content {
+    margin: 10px 14px;
+    line-height: 1.4;
+}
+
+.leaflet-popup-content b {
+    color: #2e7d32;
+    font-size: 1.05em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.toggle-list {
+    display: none; /* Hidden by default on desktop */
+    cursor: pointer;
+    border: none;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 8px;
+    z-index: 1000;
+}
+
+#establishment-list li.result-count {
+    background-color: #f9f9f9;
+    color: #555;
+    font-size: 0.85em;
+    box-shadow: none;
+    text-align: center;
+    border-bottom: none;
+    padding: 8px;
+}
+
+#establishment-list li.result-count:hover {
+    background-color: #f9f9f9;
+    transform: none;
+    box-shadow: none;
+}
+
+#establishment-list li.no-results {
+    background-color: #fff8e1;
+    color: #ff8f00;
+    text-align: center;
+    padding: 15px;
+}
+
+#establishment-list li.active {
+    background-color: #e8f5e9;
+    border-left: 3px solid #4CAF50;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    #list-section {
+        max-width: 100%;
+        height: 45vh;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        transition: transform 0.3s ease, height 0.3s ease;
+    }
+    
+    #list-section.mobile-hidden {
+        transform: translateY(-100%);
+        height: 0;
+    }
+    
+    #map-section {
+        height: 55vh;
+        transition: height 0.3s ease;
+    }
+    
+    #map-section h2 {
+        display: none;
+    }
+    
+    /* Toggle button for mobile */
+    .toggle-list {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    
+    /* When list is hidden, map takes full height */
+    #list-section.mobile-hidden + #map-section {
+        height: 100vh;
+    }
+    
+    .autocomplete-results {
+        max-height: 150px;
+    }
+}
+
+/* Smaller devices */
+@media (max-width: 480px) {
+    header {
+        padding: 8px;
+    }
+    
+    h1 {
+        font-size: 1.2em;
+    }
+    
+    #list-section h2 {
+        margin-bottom: 10px;
+    }
+    
+    .filters {
+        margin-bottom: 10px;
+    }
+    
+    #filter-input, #city-autocomplete {
+        padding: 8px 10px;
+    }
+    
+    #establishment-list li {
+        padding: 10px;
+        margin: 3px 5px;
+    }
+    
+    .autocomplete-item {
+        padding: 8px;
+    }
+}
