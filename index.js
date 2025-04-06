@@ -11,6 +11,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearSearchBtn = document.getElementById('clear-search');
     const clearCityBtn = document.getElementById('clear-city');
     
+    // Modal elements
+    const infoButton = document.getElementById('info-button');
+    const infoModal = document.getElementById('info-modal');
+    const closeModal = document.querySelector('.close-modal');
+    const updateDateElement = document.getElementById('update-date');
+    
+    // Set current date format for update date
+    const currentDate = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString('es-CO', options);
+    if (updateDateElement) {
+        updateDateElement.textContent = formattedDate;
+    }
+    
+    // Modal functionality
+    if (infoButton && infoModal && closeModal) {
+        // Open modal when button is clicked
+        infoButton.addEventListener('click', () => {
+            infoModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+        });
+        
+        // Close modal when X is clicked
+        closeModal.addEventListener('click', () => {
+            infoModal.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === infoModal) {
+                infoModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && infoModal.style.display === 'block') {
+                infoModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
     // Store all unique cities
     let allCities = [];
 
