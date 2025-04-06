@@ -6,12 +6,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const cityAutocomplete = document.getElementById('city-autocomplete');
     const citiesList = document.getElementById('cities-list');
     const mapElement = document.getElementById('map');
-    const toggleListButton = document.getElementById('toggle-list');
+    
+    // Nuevos botones contextuales (reemplazan los anteriores)
+    const viewControlBtn = document.getElementById('view-control-btn');
+    const toggleViewBtn = document.getElementById('toggle-view-btn');
+    
+    // Secciones principales
     const listSection = document.getElementById('list-section');
+    const mapSection = document.getElementById('map-section');
+    
+    // Otros elementos de la UI
     const clearSearchBtn = document.getElementById('clear-search');
     const clearCityBtn = document.getElementById('clear-city');
-    const fullscreenMapBtn = document.getElementById('fullscreen-map');
-    const mapSection = document.getElementById('map-section');
+    
+    // Iconos contextuales
+    const viewControlIcon = document.getElementById('view-control-icon');
+    const toggleViewIcon = document.getElementById('toggle-view-icon');
     
     // Modal elements
     const infoButton = document.getElementById('info-button');
@@ -77,48 +87,257 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 200);
     });
 
-    // Handle toggle list button for mobile
-    if (toggleListButton) {
-        toggleListButton.addEventListener('click', () => {
-            listSection.classList.toggle('mobile-hidden');
-            // Force map to recalculate size when toggling list
+    // ------------------- NUEVAS FUNCIONES DE NAVEGACIÓN MÓVIL -------------------
+
+    /**
+     * Estados posibles de la UI:
+     * 1. Vista combinada: Listado arriba, mapa abajo
+     * 2. Listado completo: Solo se ve el listado
+     * 3. Mapa completo: Solo se ve el mapa
+     * 4. Listado oculto: El listado está oculto (después de seleccionar un ítem)
+     */
+    
+    // Función para mostrar el mapa a pantalla completa
+    function showFullscreenMap() {
+        // Primero remover cualquier estado previo
+        resetAllStates();
+        
+        // Aplicar nuevo estado
+        mapSection.classList.add('fullscreen');
+        listSection.classList.add('mobile-hidden');
+        
+        // Configurar estilos explícitamente
+        mapSection.style.height = '100vh';
+        mapSection.style.width = '100%';
+        mapSection.style.position = 'fixed';
+        mapSection.style.top = '0';
+        mapSection.style.left = '0';
+        mapSection.style.right = '0';
+        mapSection.style.bottom = '0';
+        mapSection.style.zIndex = '1000';
+        mapSection.style.visibility = 'visible';
+        mapSection.style.display = 'block';
+        
+        // Actualizar iconos contextuales para reflejar el estado
+        updateContextualIcons('fullscreen-map');
+        
+        // Evitar scroll del body
+        document.body.style.overflow = 'hidden';
+        
+        // Recalcular tamaño del mapa
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 300);
+    }
+    
+    // Función para mostrar el listado a pantalla completa
+    function showFullscreenList() {
+        // Primero remover cualquier estado previo
+        resetAllStates();
+        
+        // Aplicar nuevo estado
+        listSection.classList.add('fullscreen-list');
+        
+        // Configurar estilos explícitamente
+        listSection.style.height = '100vh';
+        listSection.style.width = '100%';
+        listSection.style.position = 'fixed';
+        listSection.style.top = '0';
+        listSection.style.left = '0';
+        listSection.style.right = '0';
+        listSection.style.bottom = '0';
+        listSection.style.zIndex = '1000';
+        listSection.style.visibility = 'visible';
+        listSection.style.display = 'flex';
+        
+        // Actualizar iconos contextuales para reflejar el estado
+        updateContextualIcons('fullscreen-list');
+        
+        // Ocultar mapa
+        mapSection.style.height = '0';
+        mapSection.style.visibility = 'hidden';
+        mapSection.style.display = 'none';
+        
+        // Mostrar mensaje de confirmación
+        showTemporaryMessage('Modo de listado completo');
+    }
+    
+    // Función para mostrar la vista combinada (listado y mapa)
+    function showCombinedView() {
+        // Primero remover cualquier estado previo
+        resetAllStates();
+        
+        // Ajustar tamaños según el dispositivo
+        if (window.innerWidth <= 768) {
+            listSection.style.height = '60vh';
+            mapSection.style.height = '40vh';
+        } else {
+            // Para desktop, mantener el layout normal
+            listSection.style.height = '';
+            mapSection.style.height = '';
+        }
+        
+        // En pantallas muy pequeñas
+        if (window.innerWidth <= 480) {
+            listSection.style.height = '70vh';
+            mapSection.style.height = '30vh';
+        }
+        
+        // Asegurar visibilidad de ambas secciones
+        listSection.style.visibility = 'visible';
+        listSection.style.display = 'flex';
+        listSection.style.position = '';
+        listSection.style.width = '';
+        listSection.style.zIndex = '';
+        
+        mapSection.style.visibility = 'visible';
+        mapSection.style.display = 'flex';
+        mapSection.style.position = '';
+        mapSection.style.width = '';
+        mapSection.style.zIndex = '';
+        
+        // Actualizar iconos contextuales para reflejar el estado
+        updateContextualIcons('combined');
+        
+        document.body.style.overflow = '';
+        
+        // Recalcular tamaño del mapa
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 300);
+    }
+    
+    // Función para mostrar el mapa y ocultar el listado (después de seleccionar un ítem)
+    function hideListShowMap() {
+        // No resetear todos los estados, solo ajustar lo necesario
+        listSection.classList.add('mobile-hidden');
+        listSection.classList.remove('fullscreen-list');
+        mapSection.classList.remove('fullscreen');
+        
+        // Configurar estilos
+        mapSection.style.height = '100vh';
+        mapSection.style.visibility = 'visible';
+        mapSection.style.display = 'flex';
+        
+        // Actualizar iconos contextuales para reflejar el estado
+        updateContextualIcons('list-hidden');
+        
+        // Recalcular tamaño del mapa
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 300);
+    }
+    
+    // Función para resetear todos los estados
+    function resetAllStates() {
+        // Eliminar todas las clases de estado
+        listSection.classList.remove('mobile-hidden', 'fullscreen-list');
+        mapSection.classList.remove('fullscreen');
+        
+        // Restaurar overflow del body
+        document.body.style.overflow = '';
+    }
+    
+    // Función para actualizar los iconos contextuales según el estado
+    function updateContextualIcons(state) {
+        // Por defecto - vista combinada
+        viewControlBtn.title = 'Mostrar listado completo';
+        toggleViewBtn.title = 'Mostrar mapa completo';
+        
+        switch(state) {
+            case 'fullscreen-map':
+                // En mapa completo, el botón muestra listado
+                viewControlBtn.title = 'Mostrar listado';
+                break;
+                
+            case 'fullscreen-list':
+                // En listado completo, el botón vuelve a vista combinada
+                toggleViewBtn.title = 'Volver a vista combinada';
+                break;
+                
+            case 'list-hidden':
+                // Cuando el listado está oculto, el botón lo muestra
+                viewControlBtn.title = 'Mostrar listado';
+                break;
+                
+            case 'combined':
+            default:
+                // Vista combinada - comportamiento por defecto
+                break;
+        }
+    }
+    
+    // Función para mostrar un mensaje temporal
+    function showTemporaryMessage(text) {
+        // Eliminar mensaje existente si hay
+        const existingMessage = document.getElementById('temp-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
+        // Crear nuevo mensaje
+        const message = document.createElement('div');
+        message.id = 'temp-message';
+        message.style.padding = '8px';
+        message.style.margin = '10px';
+        message.style.textAlign = 'center';
+        message.style.background = '#e8f5e9';
+        message.style.borderRadius = '4px';
+        message.style.fontSize = '0.9em';
+        message.style.color = '#2e7d32';
+        message.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        message.innerHTML = text;
+        
+        // Insertar mensaje
+        const h2Element = listSection.querySelector('h2');
+        if (h2Element && h2Element.nextSibling) {
+            listSection.insertBefore(message, h2Element.nextSibling);
+        }
+        
+        // Ocultar después de 3 segundos
+        setTimeout(() => {
+            message.style.opacity = '0';
+            message.style.transition = 'opacity 0.5s ease';
             setTimeout(() => {
-                map.invalidateSize();
-            }, 300);
+                if (message.parentNode) {
+                    message.parentNode.removeChild(message);
+                }
+            }, 500);
+        }, 3000);
+    }
+    
+    // ------------------- EVENT LISTENERS PARA BOTONES -------------------
+    
+    // Botón de control contextual en el mapa
+    if (viewControlBtn) {
+        viewControlBtn.addEventListener('click', () => {
+            // Determinar acción basada en el estado actual
+            if (listSection.classList.contains('mobile-hidden')) {
+                // Si el listado está oculto, mostrar vista combinada
+                showCombinedView();
+            } 
+            else if (mapSection.classList.contains('fullscreen')) {
+                // Si el mapa está en pantalla completa, mostrar vista combinada
+                showCombinedView();
+            }
+            else if (!listSection.classList.contains('fullscreen-list')) {
+                // Si estamos en vista combinada, mostrar listado completo
+                showFullscreenList();
+            }
         });
     }
-
-    // Handle fullscreen map button
-    if (fullscreenMapBtn) {
-        fullscreenMapBtn.addEventListener('click', () => {
-            mapSection.classList.toggle('fullscreen');
-            // Cambiar el icono según el estado
-            if (mapSection.classList.contains('fullscreen')) {
-                fullscreenMapBtn.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="4 14 10 14 10 20"></polyline>
-                        <polyline points="20 10 14 10 14 4"></polyline>
-                        <line x1="14" y1="10" x2="21" y2="3"></line>
-                        <line x1="3" y1="21" x2="10" y2="14"></line>
-                    </svg>
-                `;
-                document.body.style.overflow = 'hidden';
-            } else {
-                fullscreenMapBtn.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 3 21 3 21 9"></polyline>
-                        <polyline points="9 21 3 21 3 15"></polyline>
-                        <line x1="21" y1="3" x2="14" y2="10"></line>
-                        <line x1="3" y1="21" x2="10" y2="14"></line>
-                    </svg>
-                `;
-                document.body.style.overflow = '';
+    
+    // Botón de control contextual en el listado
+    if (toggleViewBtn) {
+        toggleViewBtn.addEventListener('click', () => {
+            // Si estamos en modo listado completo, volver a vista combinada
+            if (listSection.classList.contains('fullscreen-list')) {
+                showCombinedView();
             }
-            
-            // Force map to recalculate size
-            setTimeout(() => {
-                map.invalidateSize();
-            }, 300);
+            // En cualquier otro caso, mostrar mapa completo
+            else {
+                showFullscreenMap();
+            }
         });
     }
 
@@ -192,30 +411,63 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Add click listener to list item
             li.addEventListener('click', () => {
-                // Find the corresponding marker
-                const marker = markers[li.dataset.sigla];
-                if (marker) {
-                    map.flyTo(marker.getLatLng(), 15); // Zoom and center on the marker
-                    marker.openPopup(); // Open its popup
-                    
-                    // On mobile, hide the list after clicking an item
-                    if (window.innerWidth <= 768) {
-                        listSection.classList.add('mobile-hidden');
-                    }
-                } else if (item.latitud && item.longitud) {
-                    // Fallback if marker wasn't found but coords exist
-                    map.flyTo([item.latitud, item.longitud], 15);
-                }
-                
-                // Highlight the selected item
+                // Highlight the selected item first
                 document.querySelectorAll('#establishment-list li').forEach(el => {
                     el.classList.remove('active');
                 });
                 li.classList.add('active');
+                
+                // Primero asegurar que el mapa esté visible
+                // Si estamos en modo listado completo, cambiar a vista combinada primero
+                if (listSection.classList.contains('fullscreen-list')) {
+                    showCombinedView();
+                    
+                    // Dar tiempo para que el mapa se inicialice antes de navegar
+                    setTimeout(() => {
+                        navigateToMarkerAndHideList(li, item);
+                    }, 500);
+                } else {
+                    // Si ya estamos en vista combinada, simplemente navegar
+                    navigateToMarkerAndHideList(li, item);
+                }
             });
 
             listElement.appendChild(li);
         });
+    }
+    
+    // Función separada para navegar al marcador y ocultar listado en móvil
+    function navigateToMarkerAndHideList(listItem, item) {
+        // Asegurar que el mapa sea visible y con tamaño correcto
+        mapSection.style.visibility = 'visible';
+        mapSection.style.display = 'flex';
+        map.invalidateSize();
+        
+        // Encontrar el marcador correspondiente
+        const marker = markers[listItem.dataset.sigla];
+        
+        if (marker) {
+            // Navegar al marcador
+            map.flyTo(marker.getLatLng(), 15);
+            marker.openPopup();
+            
+            // En móvil, ocultar el listado después de un breve retraso
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    hideListShowMap();
+                }, 300);
+            }
+        } else if (item.latitud && item.longitud) {
+            // Fallback si no se encuentra el marcador
+            map.flyTo([item.latitud, item.longitud], 15);
+            
+            // En móvil, ocultar el listado después de un breve retraso
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    hideListShowMap();
+                }, 300);
+            }
+        }
     }
 
     // --- Marker Generation ---

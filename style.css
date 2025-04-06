@@ -221,6 +221,7 @@ input::-webkit-calendar-picker-indicator {
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: visibility 0.1s ease, height 0.3s ease;
 }
 
 #map-section h2 {
@@ -263,15 +264,59 @@ input::-webkit-calendar-picker-indicator {
     margin-bottom: 5px;
 }
 
-.toggle-list {
-    display: none; /* Hidden by default on desktop */
-    cursor: pointer;
+/* Estilos unificados para botones flotantes contextuales */
+.floating-btn {
+    position: fixed;
+    z-index: 1100;
+    background-color: white;
     border: none;
-    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding: 8px;
-    z-index: 1000;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.floating-btn:hover {
+    background-color: #f5f5f5;
+    transform: scale(1.05);
+}
+
+/* Estilos específicos para el botón de control de vista del mapa */
+.map-control-btn {
+    top: 10px;
+    right: 10px;
+}
+
+/* Estilos específicos para el botón de control de vista del listado */
+.view-toggle-btn {
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: none; /* Oculto por defecto, se muestra según contexto */
+}
+
+.view-toggle-btn:hover {
+    background-color: #388e3c;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.view-toggle-btn svg {
+    stroke: white;
+}
+
+/* Mostrar botón flotante en modo pantalla completa del listado */
+#list-section.fullscreen-list .view-toggle-btn {
+    display: flex;
 }
 
 #establishment-list li.result-count {
@@ -321,6 +366,9 @@ input::-webkit-calendar-picker-indicator {
     #list-section.mobile-hidden {
         transform: translateY(-100%);
         height: 0;
+        overflow: hidden;
+        padding: 0;
+        border: none;
     }
     
     #map-section {
@@ -333,31 +381,17 @@ input::-webkit-calendar-picker-indicator {
         display: none;
     }
     
-    /* Toggle button for mobile */
-    .toggle-list {
-        display: block;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 500;
-        background-color: white;
-        border: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        border-radius: 4px;
-        width: 40px;
-        height: 40px;
+    /* El botón flotante está siempre visible en móvil */
+    .map-control-btn {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
     }
     
-    /* When list is hidden, map takes full height */
+    /* Cuando list está oculto, mapa toma toda la altura */
     #list-section.mobile-hidden + #map-section {
         height: 100vh;
     }
     
-    /* Nueva clase para modo de pantalla completa del mapa */
+    /* Estilo para modo pantalla completa del mapa */
     #map-section.fullscreen {
         position: fixed;
         top: 0;
@@ -367,23 +401,21 @@ input::-webkit-calendar-picker-indicator {
         z-index: 1000;
     }
     
-    /* Botón para modo pantalla completa del mapa */
-    .fullscreen-map-toggle {
-        display: block;
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        z-index: 500;
+    /* Estados específicos de botones contextuales */
+    /* Cuando el mapa está en pantalla completa */
+    #map-section.fullscreen .map-control-btn {
         background-color: white;
-        border: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        border-radius: 4px;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
+    }
+    
+    /* Cuando el listado está oculto, cambiar estilo del botón */
+    #list-section.mobile-hidden + #map-section .map-control-btn {
+        background-color: #4CAF50;
+        color: white;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+    
+    #list-section.mobile-hidden + #map-section .map-control-btn svg {
+        stroke: white;
     }
     
     .autocomplete-results {
@@ -554,4 +586,74 @@ input::-webkit-calendar-picker-indicator {
     header {
         padding: 8px 12px;
     }
+}
+
+/* Estilos específicos para estados de pantalla completa */
+#list-section.fullscreen-list {
+    background-color: #f9f9f9;
+    padding-bottom: 70px;
+    height: 100vh !important;
+    z-index: 1010;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    overflow-y: auto;
+}
+
+/* Cuando el listado está en modo pantalla completa, el mapa debe ocultarse */
+#list-section.fullscreen-list + #map-section {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+#list-section.fullscreen-list h2 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#list-section.fullscreen-list .list-container {
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+#list-section.fullscreen-list #establishment-list li {
+    margin: 8px 10px;
+    padding: 15px;
+}
+
+/* Transición suave para mostrar el mapa después de un estado oculto */
+#map-section {
+    transition: visibility 0.1s ease, height 0.3s ease;
+}
+
+#map-section.visible-map {
+    display: flex !important;
+    visibility: visible !important;
+    position: relative;
+    z-index: 5;
+    height: auto !important;
+    width: 100% !important;
+    opacity: 1 !important;
+}
+
+/* Asegurar visibilidad del contenedor del mapa */
+#map-section.visible-map #map {
+    display: block !important;
+    visibility: visible !important;
+    height: 100% !important;
+}
+
+/* Iconos contextuales para diferentes estados */
+/* En estado de mapa completo, mostrar icono de lista */
+#map-section.fullscreen .map-control-btn #view-control-icon {
+    transform: rotate(90deg); /* Girar icono para indicar cambio de función */
+}
+
+/* En estado de listado completo, mostrar icono de vista combinada */
+#list-section.fullscreen-list .view-toggle-btn #toggle-view-icon {
+    transform: scale(0.85); /* Reducir tamaño para indicar "minimizar" */
 }
