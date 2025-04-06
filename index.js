@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mapElement = document.getElementById('map');
     const toggleListButton = document.getElementById('toggle-list');
     const listSection = document.getElementById('list-section');
+    const clearSearchBtn = document.getElementById('clear-search');
+    const clearCityBtn = document.getElementById('clear-city');
     
     // Store all unique cities
     let allCities = [];
@@ -36,6 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 map.invalidateSize();
             }, 300);
+        });
+    }
+
+    // Handle clear buttons
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            filterInput.value = '';
+            filterInput.focus();
+            filterEstablecimientos();
+        });
+    }
+    
+    if (clearCityBtn) {
+        clearCityBtn.addEventListener('click', () => {
+            cityAutocomplete.value = '';
+            cityAutocomplete.focus();
+            filterEstablecimientos();
         });
     }
 

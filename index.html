@@ -18,10 +18,42 @@
         <aside id="list-section" class="section">
             <h2>Listado</h2>
             <div class="filters">
-                <input type="text" id="filter-input" placeholder="Buscar establecimientos...">
+                <div class="search-field">
+                    <label for="filter-input">Búsqueda:</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="filter-input" placeholder="Buscar establecimientos...">
+                        <span class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </span>
+                        <button type="button" id="clear-search" class="clear-input" title="Limpiar búsqueda">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
                 <div class="filter-controls">
                     <div class="city-search">
-                        <input type="text" id="city-autocomplete" list="cities-list" placeholder="Buscar ciudad...">
+                        <label for="city-autocomplete">Ciudad:</label>
+                        <div class="input-with-icon">
+                            <input type="text" id="city-autocomplete" list="cities-list" placeholder="Buscar ciudad...">
+                            <span class="search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <button type="button" id="clear-city" class="clear-input" title="Limpiar filtro">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
                         <datalist id="cities-list">
                             <!-- Las opciones se generarán con JavaScript -->
                         </datalist>
