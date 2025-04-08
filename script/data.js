@@ -1,5 +1,4 @@
-// Export the establecimientos array as a module
-export const establecimientos = [
+const establecimientos = [
     // Chunk 1: Pages 1-5
     {
         "nombre": "ESTABLECIMIENTO DE SANIDAD MILITAR BATALLÓN DE INFANTERIA MECANIZADA No. 06 CARTAGENA",

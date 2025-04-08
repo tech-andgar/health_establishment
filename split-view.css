@@ -1,0 +1,166 @@
+/* Split View Panel System - Resizable Panels */
+
+/* Base container for the split panels */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh; /* Use viewport height to ensure full height */
+  flex-direction: row; /* Horizontal by default (for desktop) */
+}
+
+/* Common panel styles */
+.panel {
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+/* Left panel styles (list) */
+.left-panel {
+  background-color: #f9f9f9;
+  width: 40%; /* Start with 40% width for list (adjust as needed) */
+  min-width: 100px;
+  max-width: calc(100% - 108px);
+  height: 100%; /* Ensure full height */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Right panel styles (map) */
+.right-panel {
+  background-color: #ffffff;
+  flex-grow: 1;
+  width: 60%; /* Start with 60% width for map (adjust as needed) */
+  min-width: 100px;
+  max-width: calc(100% - 108px);
+  height: 100%; /* Ensure full height */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Divider styles */
+.divider {
+  width: 8px;
+  background-color: #e0e0e0;
+  cursor: col-resize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  height: 100%; /* Ensure full height */
+  z-index: 10;
+}
+
+.divider:hover,
+.divider.active {
+  background-color: #4CAF50;
+}
+
+.divider-handle {
+  height: 30px;
+  width: 4px;
+  background-color: #4CAF50;
+  border-radius: 2px;
+}
+
+/* Vertical layout styles (for mobile) */
+.container.vertical {
+  flex-direction: column;
+  height: 100vh; /* Ensure full viewport height */
+}
+
+.left-panel.vertical {
+  height: 60vh; /* Start with 60% height for list on mobile */
+  width: 100%;
+  max-width: 100%;
+  max-height: calc(100% - 108px);
+}
+
+.right-panel.vertical {
+  height: 40vh; /* Start with 40% height for map on mobile */
+  width: 100%;
+  max-width: 100%;
+  max-height: calc(100% - 108px);
+}
+
+.divider.vertical {
+  height: 8px;
+  width: 100%;
+  cursor: row-resize;
+}
+
+.divider-handle.vertical {
+  height: 4px;
+  width: 30px;
+}
+
+/* View mode styles */
+/* List view mode - hide map */
+body.view-mode-list .right-panel {
+  display: none;
+}
+
+body.view-mode-list .divider {
+  display: none;
+}
+
+body.view-mode-list .left-panel {
+  width: 100%;
+  max-width: 100%;
+  flex-grow: 1;
+}
+
+/* Map view mode - hide list */
+body.view-mode-map .left-panel {
+  display: none;
+}
+
+body.view-mode-map .divider {
+  display: none;
+}
+
+body.view-mode-map .right-panel {
+  width: 100%;
+  max-width: 100%;
+  flex-grow: 1;
+}
+
+/* Both view mode - show both (default) */
+body.view-mode-both .left-panel,
+body.view-mode-both .right-panel,
+body.view-mode-both .divider {
+  display: flex;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: 100vh; /* Ensure full viewport height */
+  }
+
+  .left-panel {
+    height: 60vh; /* Same as vertical class for consistency */
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100% - 108px);
+  }
+
+  .right-panel {
+    height: 40vh; /* Same as vertical class for consistency */
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100% - 108px);
+  }
+
+  .divider {
+    height: 8px;
+    width: 100%;
+    cursor: row-resize;
+  }
+
+  .divider-handle {
+    height: 4px;
+    width: 30px;
+  }
+}
