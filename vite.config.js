@@ -3,7 +3,7 @@ import obfuscatorPlugin from 'rollup-plugin-obfuscator'
 import viteCompression from 'vite-plugin-compression'
 
 export default defineConfig({
-  base: '/health_establishment/',
+  base: '/',
   root: 'src',
   publicDir: '../public',
   build: {
@@ -45,7 +45,14 @@ export default defineConfig({
         },
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.')
+          const ext = info[info.length - 1]
+          if (/\.(css|js)$/.test(assetInfo.name)) {
+            return `assets/[name]-[hash].[ext]`
+          }
+          return `assets/[name].[ext]`
+        }
       }
     },
     target: 'es2015',
