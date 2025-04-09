@@ -7,47 +7,27 @@
   <meta name="theme-color" content="#4CAF50">
   <title>Establecimientos de Sanidad Militar del Ejército</title>
 
-  <!-- Google Analytics tradicional -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWFK5T6NHQ"></script>
+  <!-- Google Analytics simplificado -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    
-    gtag('config', 'G-DWFK5T6NHQ', {
-      send_page_view: true,
-      debug_mode: true,
-      transport_type: 'beacon',
-      transport_url: 'https://www.google-analytics.com',
-      allow_google_signals: false,
-      allow_ad_personalization_signals: false,
-      cookie_flags: 'SameSite=None;Secure',
-      client_storage: 'none',
-      anonymize_ip: true,
-      allow_google_signals: false,
-      allow_ad_personalization_signals: false,
-      restrict_domain: 'demo_health_establishment.tech-andgar.me'
-    });
-
-    // Función para enviar eventos
+    // Función para enviar eventos a GA de forma simple
     window.sendGAEvent = function(eventName, eventParams = {}) {
       try {
-        // Usar navigator.sendBeacon para envío más confiable
-        const data = {
-          ...eventParams,
-          timestamp: new Date().toISOString(),
-          client_id: gtag('get', 'G-DWFK5T6NHQ', 'client_id'),
-          non_interaction: false
-        };
+        // Crear un elemento de imagen para enviar datos a GA
+        const img = new Image();
+        const params = new URLSearchParams({
+          v: '1',
+          tid: 'G-DWFK5T6NHQ',
+          cid: Math.random().toString(36).substring(2, 15),
+          t: 'event',
+          ec: 'test',
+          ea: eventName,
+          el: JSON.stringify(eventParams),
+          dl: window.location.href,
+          dt: document.title
+        });
         
-        // Enviar evento a GA
-        gtag('event', eventName, data);
-        
-        // Enviar también como beacon para mayor confiabilidad
-        const beaconData = new Blob([JSON.stringify(data)], {type: 'application/json'});
-        navigator.sendBeacon('https://www.google-analytics.com/g/collect', beaconData);
-        
-        console.log('Evento GA enviado:', eventName, data);
+        img.src = `https://www.google-analytics.com/collect?${params.toString()}`;
+        console.log('Evento GA enviado (método simple):', eventName, eventParams);
       } catch (error) {
         console.error('Error al enviar evento GA:', error);
       }
@@ -89,7 +69,7 @@
         z-index: 1000;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       `;
-      div.textContent = '¡Hola! Este mensaje fue creado por Google Analytics tradicional!';
+      div.textContent = '¡Hola! Este mensaje fue creado por Google Analytics simplificado!';
       document.body.appendChild(div);
 
       // Añadir botón para probar eventos de GA
