@@ -34,6 +34,9 @@ export default defineConfig({
       }
     },
     rollupOptions: {
+      input: {
+        main: 'src/index.html'
+      },
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
