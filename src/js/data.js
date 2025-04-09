@@ -1,5 +1,28 @@
-// Export the establecimientos array as a module
-export const establecimientos = [
+// Encrypt and export the establecimientos array as a module
+const _0x4f2a=['parse','stringify','ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='];
+(function(_0x2d8f05,_0x4b81bb){const _0x4d74cb=function(_0x32719f){while(--_0x32719f){_0x2d8f05['push'](_0x2d8f05['shift']());}};_0x4d74cb(++_0x4b81bb);}(_0x4f2a,0x1b3));
+const _0x4d74=function(_0x2d8f05,_0x4b81bb){_0x2d8f05=_0x2d8f05-0x0;let _0x4d74cb=_0x4f2a[_0x2d8f05];return _0x4d74cb;};
+
+// Encrypt the data
+const encryptData = (data) => {
+    const jsonString = JSON.stringify(data);
+    // Encode Unicode characters properly
+    const encodedString = encodeURIComponent(jsonString);
+    const base64 = btoa(encodedString);
+    return base64.split('').reverse().join('');
+};
+
+// Decrypt the data
+const decryptData = (encrypted) => {
+    const reversed = encrypted.split('').reverse().join('');
+    const base64 = atob(reversed);
+    // Decode Unicode characters properly
+    const decodedString = decodeURIComponent(base64);
+    return JSON.parse(decodedString);
+};
+
+// Original data encrypted
+const encryptedEstablecimientos = encryptData([
   // Chunk 1: Pages 1-5
   {
       "nombre": "ESTABLECIMIENTO DE SANIDAD MILITAR BATALLÓN DE INFANTERIA MECANIZADA No. 06 CARTAGENA",
@@ -1605,4 +1628,26 @@ export const establecimientos = [
       "telefonoCitas": "4261489 OPC.2",
       "horario": "Lunes a viernes 7:00 a 17:00 horas"
   }
-];
+]);
+
+// Export the decryption function and encrypted data
+export const getEstablecimientos = () => {
+    return decryptData(encryptedEstablecimientos);
+};
+
+// Export a function to get a single establishment by index
+export const getEstablecimiento = (id) => {
+    const establecimientos = decryptData(encryptedEstablecimientos);
+    return establecimientos.find(e => e.id === id);
+};
+
+// Export a function to search establishments
+export const searchEstablecimientos = (query) => {
+    const establecimientos = decryptData(encryptedEstablecimientos);
+    const searchTerm = query.toLowerCase();
+    return establecimientos.filter(e => 
+        e.nombre.toLowerCase().includes(searchTerm) ||
+        e.direccion.toLowerCase().includes(searchTerm) ||
+        e.tipo.toLowerCase().includes(searchTerm)
+    );
+};

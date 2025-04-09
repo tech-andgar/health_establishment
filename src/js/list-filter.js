@@ -1,8 +1,14 @@
 // List generation and filtering functionality
 import { setInnerHTML, addEventListener, addClass, removeClass } from './utils/helpers.js';
-import { establecimientos } from './data.js';
+import { getEstablecimientos } from './data.js';
 
 export function initializeListFilter(listElement, filterInput, cityAutocomplete, citiesList, map, markers, typeFilter) {
+  let establecimientos = [];
+  try {
+    establecimientos = getEstablecimientos();
+  } catch (error) {
+    console.error("Error al cargar los establecimientos:", error);
+  }
   // Store all unique cities
   let allCities = [];
 

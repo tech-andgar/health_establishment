@@ -5,7 +5,7 @@ import { initializeViewControl } from './view-control.js';
 import { initializeListFilter } from './list-filter.js';
 import { initializeMarkers } from './markers.js';
 import { getElement, addEventListener } from './utils/helpers.js';
-import { establecimientos } from './data.js';
+import { getEstablecimientos } from './data.js';
 import { toggleFilters } from './filter-toggle.js';
 import { initializeSplitView } from './split-view.js';
 
@@ -81,14 +81,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Initial Load ---
-  if (establecimientos && establecimientos.length > 0) {
-    populateCityOptions(establecimientos); // Populate city options
-    displayList(establecimientos); // Display the full list initially
-    addMarkers(establecimientos); // Add all markers to the map
-    // Set the initial view mode explicitly after data is loaded
-    setViewMode('both');
-  } else {
-    console.error("Data 'establecimientos' not found or empty. Check data.js");
-    listElement.innerHTML = '<li class="no-results">Error al cargar los datos.</li>';
+  try {
+    const establecimientos = getEstablecimientos();
+    if (establecimientos && establecimientos.length > 0) {
+      populateCityOptions(establecimientos); // Populate city options
+      displayList(establecimientos); // Display the full list initially
+      addMarkers(establecimientos); // Add all markers to the map
+      // Set the initial view mode explicitly after data is loaded
+      setViewMode('both');
+    } else {
+      console.error("No se encontraron establecimientos en los datos");
+      listElement.innerHTML = '<li class="no-results">No se encontraron establecimientos en los datos.</li>';
+    }
+  } catch (error) {
+    console.error("Error al cargar los datos:", error);
+    listElement.innerHTML = '<li class="no-results">Error al cargar los datos. Por favor, intente más tarde.</li>';
   }
 });
