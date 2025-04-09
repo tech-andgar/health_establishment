@@ -1,0 +1,25 @@
+{
+  "name": "health_establishment",
+  "version": "1.0.0",
+  "description": "Aplicación web para visualizar los establecimientos de sanidad militar del ejército colombiano en un mapa interactivo.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tech-andgar/health_establishment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tech-andgar/health_establishment/issues"
+  },
+  "homepage": "https://github.com/tech-andgar/health_establishment#readme",
+  "devDependencies": {
+    "vite": "^6.2.5"
+  }
+}

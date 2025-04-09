@@ -5,7 +5,7 @@ import { initializeViewControl } from './view-control.js';
 import { initializeListFilter } from './list-filter.js';
 import { initializeMarkers } from './markers.js';
 import { getElement, addEventListener } from './utils/helpers.js';
-import { establecimientos } from '../data.js';
+import { establecimientos } from './data.js';
 import { toggleFilters } from './filter-toggle.js';
 import { initializeSplitView } from './split-view.js';
 

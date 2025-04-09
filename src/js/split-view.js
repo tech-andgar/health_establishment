@@ -263,6 +263,4 @@ export function initializeSplitView() {
     updateLayoutClasses(currentVertical ? 'horizontal' : 'vertical');
     updateContainerSize();
   };
-
-  console.log('Split view inicializado correctamente');
 }
