@@ -3,11 +3,17 @@ import obfuscator from 'rollup-plugin-obfuscator'
 import terser from '@rollup/plugin-terser'
 import gzip from 'rollup-plugin-gzip'
 import brotli from 'rollup-plugin-brotli'
+import { partytownVite } from '@qwik.dev/partytown/utils'
 
 export default defineConfig({
   base: '/',
   root: 'src',
   publicDir: '../public',
+  plugins: [
+    partytownVite({
+      debug: true
+    })
+  ],
   build: {
     outDir: '../dist',
     emptyOutDir: true,
