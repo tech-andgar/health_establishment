@@ -12,9 +12,47 @@
     partytown = {
       debug: true,
       forward: ['dataLayer.push'],
+      resolveUrl: (url) => {
+        const proxyUrl = new URL('/~partytown/proxy', window.location.origin);
+        proxyUrl.searchParams.append('url', url.href);
+        return proxyUrl;
+      }
     };
   </script>
   <script src="/~partytown/partytown.js"></script>
+
+  <!-- Google Analytics con Partytown -->
+  <script type="text/partytown">
+    // Google Analytics 4
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DWFK5T6NHQ', {
+      transport_url: 'https://www.google-analytics.com',
+      transport_type: 'beacon'
+    });
+
+    // Función para enviar eventos - definida en el scope global del worker
+    window.sendGAEvent = function(eventName, eventParams = {}) {
+      try {
+        gtag('event', eventName, {
+          ...eventParams,
+          timestamp: new Date().toISOString()
+        });
+        console.log('Evento GA enviado:', eventName, eventParams);
+      } catch (error) {
+        console.error('Error al enviar evento GA:', error);
+      }
+    }
+
+    // Ejemplo de evento al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      window.sendGAEvent('page_view', {
+        page_title: document.title,
+        page_location: window.location.href
+      });
+    });
+  </script>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -44,6 +82,26 @@
       `;
       div.textContent = '¡Hola! Este mensaje fue creado por Partytown ejecutándose en un Web Worker!';
       document.body.appendChild(div);
+
+      // Añadir botón para probar eventos de GA
+      const button = document.createElement('button');
+      button.style.cssText = `
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      `;
+      button.textContent = 'Enviar evento de prueba a GA';
+      button.onclick = () => {
+        window.sendGAEvent('test_button_click', {
+          button_name: 'test_button',
+          timestamp: new Date().toISOString()
+        });
+      };
+      div.appendChild(button);
     }
 
     // Intentar añadir el elemento cuando el DOM esté listo
