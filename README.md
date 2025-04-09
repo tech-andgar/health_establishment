@@ -146,7 +146,7 @@ The development server runs on:
 - **Package Manager**: pnpm
 - **Version Control**: Git
 - **Deployment**: GitHub Pages (configured via CNAME)
-- **License**: ISC
+- **License**: Non-Commercial with Attribution
 - **Repository**: [GitHub](https://github.com/tech-andgar/health_establishment)
 
 ### Build Configuration
@@ -161,4 +161,31 @@ The development server runs on:
 
 ## License
 
-ISC License
+### Software License
+This software is licensed under a Non-Commercial License with Attribution requirement. This means:
+
+- **Non-Commercial Use**: The software cannot be used for commercial purposes.
+- **Attribution Required**: Any use of this software must include proper attribution to the original author.
+- **Modifications**: Modifications are allowed but must maintain the same license terms.
+
+### Data License
+The data used in this project is based on information from [datos.gov.co](https://www.datos.gov.co), which is freely available under the following terms:
+
+- Data can be freely used, modified, and distributed
+- Commercial use of the data is permitted
+- Attribution to the original data source is required
+
+### Attribution Requirements
+When using this project, you must include:
+
+1. For the software:
+   ```
+   Based on Health Establishment Project by [Andrés García (TECH-ANDGAR)](https://tech-andgar.me)
+   https://github.com/tech-andgar/health_establishment
+   ```
+
+2. For the data:
+   ```
+   Data sourced from datos.gov.co
+   https://www.datos.gov.co
+   ```
