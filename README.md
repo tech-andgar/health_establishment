@@ -162,30 +162,72 @@ The development server runs on:
 ## License
 
 ### Software License
-This software is licensed under a Non-Commercial License with Attribution requirement. This means:
+Copyright (c) 2024 Andrés García (TECH-ANDGAR)
 
-- **Non-Commercial Use**: The software cannot be used for commercial purposes.
-- **Attribution Required**: Any use of this software must include proper attribution to the original author.
-- **Modifications**: Modifications are allowed but must maintain the same license terms.
+This software is licensed under a Non-Commercial License with Attribution requirement (NC-BY). This license is based on Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) principles.
+
+#### Terms and Conditions:
+
+1. **Non-Commercial Use**
+   - The software cannot be used for commercial purposes without explicit permission
+   - Commercial use includes but is not limited to:
+     * Selling the software or its derivatives
+     * Using the software in a commercial product or service
+     * Using the software to generate revenue
+   - Non-commercial use includes:
+     * Personal projects
+     * Educational purposes
+     * Research
+     * Non-profit organizations
+
+2. **Commercial Use**
+   - Commercial use of this software is not permitted under this license
+   - For commercial licensing, please contact the author:
+     * Email: dev@tech-andgar.com
+     * Website: https://tech-andgar.me
+   - Commercial licensing terms will be negotiated separately
+   - A commercial license may include:
+     * Usage rights
+     * Modification rights
+     * Distribution rights
+     * Support options
+     * Custom terms based on your needs
+
+3. **Attribution Requirements**
+   - Any use of this software must include proper attribution
+   - Attribution must be visible and prominent
+   - Attribution must include:
+     * Original author's name: Andrés García (TECH-ANDGAR)
+     * Link to author's website: https://tech-andgar.me
+     * Link to the original repository: https://github.com/tech-andgar/health_establishment
+     * Date of use
+
+4. **Modifications and Derivatives**
+   - Modifications are allowed for non-commercial purposes
+   - All modifications must maintain the same license terms
+   - Modified versions must clearly indicate changes from the original
+   - The original author must be credited
 
 ### Data License
-The data used in this project is based on information from [datos.gov.co](https://www.datos.gov.co), which is freely available under the following terms:
+The data used in this project is sourced from [datos.gov.co](https://www.datos.gov.co) and is subject to the following terms:
 
-- Data can be freely used, modified, and distributed
-- Commercial use of the data is permitted
-- Attribution to the original data source is required
+1. **Data Usage Rights**
+   - Data can be freely used, modified, and distributed
+   - Commercial use of the data is permitted
+   - Attribution to datos.gov.co is required
 
-### Attribution Requirements
-When using this project, you must include:
-
-1. For the software:
-   ```
-   Based on Health Establishment Project by [Andrés García (TECH-ANDGAR)](https://tech-andgar.me)
-   https://github.com/tech-andgar/health_establishment
-   ```
-
-2. For the data:
+2. **Data Attribution Requirements**
+   When using the data, you must include:
    ```
    Data sourced from datos.gov.co
    https://www.datos.gov.co
+   Last accessed: 2025-04-08
    ```
+
+### Compliance and Enforcement
+- Violation of these license terms may result in legal action
+- The copyright holder reserves the right to modify these terms at any time
+- Continued use of the software after terms modification constitutes acceptance of the new terms
+
+### Disclaimer
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
