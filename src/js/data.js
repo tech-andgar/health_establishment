@@ -1647,7 +1647,7 @@ export const searchEstablecimientos = (query) => {
     const searchTerm = query.toLowerCase();
     return establecimientos.filter(e => 
         e.nombre.toLowerCase().includes(searchTerm) ||
-        e.direccion.toLowerCase().includes(searchTerm) ||
-        e.tipo.toLowerCase().includes(searchTerm)
+        e.ciudad.toLowerCase().includes(searchTerm) ||
+        e.departamento.toLowerCase().includes(searchTerm)
     );
 };

@@ -27,8 +27,11 @@ export default defineConfig({
         main: 'src/index.html'
       },
       output: {
-        manualChunks: {
-          'data': ['./src/js/data.js']
+        manualChunks: (id) => {
+          if (id.includes('data.js')) {
+            return 'data'
+          }
+          return 'vendor'
         },
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
@@ -45,7 +48,7 @@ export default defineConfig({
         obfuscator({
           compact: true,
           controlFlowFlattening: true,
-          controlFlowFlatteningThreshold: 0.75,
+          controlFlowFlatteningThreshold: 1,
           deadCodeInjection: true,
           deadCodeInjectionThreshold: 0.4,
           debugProtection: true,
@@ -58,9 +61,11 @@ export default defineConfig({
           selfDefending: true,
           stringArray: true,
           stringArrayEncoding: ['base64'],
-          stringArrayThreshold: 0.75,
+          stringArrayThreshold: 2,
           transformObjectKeys: true,
-          unicodeEscapeSequence: false
+          unicodeEscapeSequence: false,
+          target: 'browser',
+          include: ['**/data.js']
         }),
         terser({
           compress: {
