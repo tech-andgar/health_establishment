@@ -13,19 +13,41 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+    
     gtag('config', 'G-DWFK5T6NHQ', {
       send_page_view: true,
-      debug_mode: true
+      debug_mode: true,
+      transport_type: 'beacon',
+      transport_url: 'https://www.google-analytics.com',
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+      cookie_flags: 'SameSite=None;Secure',
+      client_storage: 'none',
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+      restrict_domain: 'demo_health_establishment.tech-andgar.me'
     });
 
     // Función para enviar eventos
     window.sendGAEvent = function(eventName, eventParams = {}) {
       try {
-        gtag('event', eventName, {
+        // Usar navigator.sendBeacon para envío más confiable
+        const data = {
           ...eventParams,
-          timestamp: new Date().toISOString()
-        });
-        console.log('Evento GA enviado:', eventName, eventParams);
+          timestamp: new Date().toISOString(),
+          client_id: gtag('get', 'G-DWFK5T6NHQ', 'client_id'),
+          non_interaction: false
+        };
+        
+        // Enviar evento a GA
+        gtag('event', eventName, data);
+        
+        // Enviar también como beacon para mayor confiabilidad
+        const beaconData = new Blob([JSON.stringify(data)], {type: 'application/json'});
+        navigator.sendBeacon('https://www.google-analytics.com/g/collect', beaconData);
+        
+        console.log('Evento GA enviado:', eventName, data);
       } catch (error) {
         console.error('Error al enviar evento GA:', error);
       }
