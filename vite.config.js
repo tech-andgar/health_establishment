@@ -15,18 +15,21 @@ export default defineConfig({
         drop_console: true,
         drop_debugger: true,
         pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
-        passes: 2,
-        unsafe: false,
-        unsafe_math: false,
-        unsafe_proto: false,
-        unsafe_regexp: false,
-        unsafe_undefined: false
+        passes: 3,
+        unsafe: true,
+        unsafe_math: true,
+        unsafe_proto: true,
+        unsafe_regexp: true,
+        unsafe_undefined: true
       },
       mangle: {
         toplevel: true,
-        properties: false,
-        keep_fnames: true,
-        keep_classnames: true
+        properties: {
+          regex: /^_/,
+          keep_quoted: true
+        },
+        keep_fnames: false,
+        keep_classnames: false
       },
       format: {
         comments: false,
@@ -63,21 +66,28 @@ export default defineConfig({
   plugins: [
     obfuscatorPlugin({
       compact: true,
-      controlFlowFlattening: false,
-      deadCodeInjection: false,
-      debugProtection: false,
-      debugProtectionInterval: false,
+      controlFlowFlattening: true,
+      controlFlowFlatteningThreshold: 0.5,
+      deadCodeInjection: true,
+      deadCodeInjectionThreshold: 0.3,
+      debugProtection: true,
+      debugProtectionInterval: true,
       disableConsoleOutput: true,
       identifierNamesGenerator: 'hexadecimal',
       log: false,
       renameGlobals: false,
       rotateStringArray: true,
-      selfDefending: false,
+      selfDefending: true,
       stringArray: true,
       stringArrayEncoding: ['base64'],
-      stringArrayThreshold: 0.5,
-      transformObjectKeys: false,
-      unicodeEscapeSequence: false
+      stringArrayThreshold: 0.75,
+      transformObjectKeys: true,
+      unicodeEscapeSequence: true,
+      splitStrings: true,
+      splitStringsChunkLength: 5,
+      target: 'browser',
+      reservedNames: ['^_'],
+      reservedStrings: ['^_']
     }),
     viteCompression({
       verbose: true,
