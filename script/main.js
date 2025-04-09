@@ -6,6 +6,8 @@ import { initializeListFilter } from './list-filter.js';
 import { initializeMarkers } from './markers.js';
 import { getElement, addEventListener } from './utils/helpers.js';
 import { establecimientos } from '../data.js';
+import { toggleFilters } from './filter-toggle.js';
+import { initializeSplitView } from './split-view.js';
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -33,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize modal
   initializeModal();
+
+  // Initialize filter toggle
+  toggleFilters();
+
+  // Initialize split view
+  initializeSplitView();
 
   // Initialize map
   const map = initializeMap(mapElement);

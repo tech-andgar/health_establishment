@@ -10,11 +10,10 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="split-view.css">
-  <script src="./script/main.js" defer></script>
-  <script src="./split-view.js" defer></script>
 
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/split-view.css">
+  <script src="./script/main.js" type="module" defer></script>
 </head>
 
 <body>
@@ -38,8 +37,13 @@
   </header>
   <main class="container">
     <div class="panel left-panel" id="list-section">
-      <h2>Listado</h2>
-      <div class="filters">
+      <div class="filters-toggle">
+        <button id="toggle-filters" class="toggle-button">
+          <span class="toggle-icon">▼</span>
+          <span class="toggle-text">Mostrar filtros</span>
+        </button>
+      </div>
+      <div class="filters" style="display: none;">
         <div class="filters-row">
           <div class="search-field">
             <label for="filter-input">Búsqueda:</label>
@@ -84,20 +88,20 @@
               <!-- Las opciones se generarán con JavaScript -->
             </datalist>
           </div>
-        </div>
-        <div class="filters-row">
           <div class="type-filter">
             <label for="establishment-type">Tipo de establecimiento:</label>
             <div class="input-with-icon">
               <input type="text" id="establishment-type" list="type-list" placeholder="Seleccionar tipo...">
               <span class="search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="#4CAF50" stroke-width="2">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
               </span>
               <button type="button" id="clear-type" class="clear-input" title="Limpiar filtro">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="#999" stroke-width="2">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
@@ -138,23 +142,23 @@
       <div id="map"></div>
     </div>
   </main>
-  
+
   <!-- Modal de información -->
   <div id="info-modal" class="modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>
       <h3>Información</h3>
       <div class="info-content">
-        <p><strong>Fuente de datos:</strong> <a href="https://www.datos.gov.co/api/views/fgfq-enis/rows.pdf" target="_blank">Plataforma Nacional de Datos Abiertos - Ejercito Nacional de Colombia</a></p>
-        <p><strong>Desarrollado por:</strong> Andres García (TECH-ANDGAR) <a href="https://github.com/tech-andgar" target="_blank">GitHub</a> & AI (Anthropic, OpenAI, Google)</p>
+        <p><strong>Fuente de datos:</strong> <a href="https://www.datos.gov.co/api/views/fgfq-enis/rows.pdf"
+            target="_blank">Plataforma Nacional de Datos Abiertos - Ejercito Nacional de Colombia</a></p>
+        <p><strong>Desarrollado por:</strong> Andres García (TECH-ANDGAR) <a href="https://github.com/tech-andgar"
+            target="_blank">GitHub</a> & AI (Anthropic, OpenAI, Google)</p>
         <p><strong>Última actualización:</strong> <span id="update-date">Abril 2025</span></p>
       </div>
     </div>
   </div>
-  
-  <!-- Your Data -->
-  <script type="module" src="data.js"></script>
-  <!-- Custom JavaScript -->
-  <script type="module" src="script/main.js"></script>
+
+
 </body>
+
 </html>
