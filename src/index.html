@@ -7,63 +7,33 @@
   <meta name="theme-color" content="#4CAF50">
   <title>Establecimientos de Sanidad Militar del Ejército</title>
 
-  <!-- Partytown -->
+  <!-- Google Analytics tradicional -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWFK5T6NHQ"></script>
   <script>
-    partytown = {
-      debug: true,
-      forward: ['dataLayer.push'],
-      resolveUrl: (url) => {
-        const proxyUrl = new URL('/~partytown/proxy', window.location.origin);
-        proxyUrl.searchParams.append('url', url.href);
-        return proxyUrl;
-      }
-    };
-  </script>
-  <script src="/~partytown/partytown.js"></script>
-
-  <!-- Google Analytics con Partytown -->
-  <script type="text/partytown">
-    // Google Analytics 4
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    
-    // Configuración inicial de GA4
     gtag('js', new Date());
     gtag('config', 'G-DWFK5T6NHQ', {
       send_page_view: true,
-      transport_url: 'https://www.google-analytics.com',
-      transport_type: 'beacon',
       debug_mode: true
     });
 
-    // Función para enviar eventos - definida en el scope global del worker
+    // Función para enviar eventos
     window.sendGAEvent = function(eventName, eventParams = {}) {
       try {
-        // Asegurarse de que el evento se envíe correctamente
         gtag('event', eventName, {
           ...eventParams,
-          timestamp: new Date().toISOString(),
-          non_interaction: false,
-          page_location: window.location.href,
-          page_title: document.title
-        });
-        
-        // Verificar que el evento se haya enviado
-        console.log('Evento GA enviado:', eventName, eventParams);
-        
-        // Enviar un evento de heartbeat para verificar la conexión
-        gtag('event', 'heartbeat', {
           timestamp: new Date().toISOString()
         });
+        console.log('Evento GA enviado:', eventName, eventParams);
       } catch (error) {
         console.error('Error al enviar evento GA:', error);
       }
     }
 
-    // Ejemplo de evento al cargar la página
+    // Evento de vista de página al cargar
     document.addEventListener('DOMContentLoaded', () => {
-      // Enviar evento de vista de página
-      window.sendGAEvent('page_view', {
+      sendGAEvent('page_view', {
         page_title: document.title,
         page_location: window.location.href,
         page_path: window.location.pathname
@@ -79,9 +49,9 @@
   <link rel="stylesheet" href="/css/style.css">
   <script type="module" src="/js/main.js"></script>
 
-  <!-- Partytown Hello World Test -->
-  <script type="text/partytown">
-    console.log("Hello from Partytown! This runs in a web worker!");
+  <!-- Test de Google Analytics -->
+  <script>
+    console.log("Hello from Google Analytics test!");
     
     // Función para crear y añadir el elemento
     function addHelloWorld() {
@@ -97,7 +67,7 @@
         z-index: 1000;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       `;
-      div.textContent = '¡Hola! Este mensaje fue creado por Partytown ejecutándose en un Web Worker!';
+      div.textContent = '¡Hola! Este mensaje fue creado por Google Analytics tradicional!';
       document.body.appendChild(div);
 
       // Añadir botón para probar eventos de GA
@@ -113,7 +83,7 @@
       `;
       button.textContent = 'Enviar evento de prueba a GA';
       button.onclick = () => {
-        window.sendGAEvent('test_button_click', {
+        sendGAEvent('test_button_click', {
           button_name: 'test_button',
           timestamp: new Date().toISOString()
         });
