@@ -7,52 +7,6 @@
   <meta name="theme-color" content="#4CAF50">
   <title>Establecimientos de Sanidad Militar del Ejército</title>
 
-  <!-- Google Analytics tradicional -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWFK5T6NHQ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-DWFK5T6NHQ');
-  </script>
-
-  <!-- Google Analytics simplificado -->
-  <script>
-    // Función para enviar eventos a GA de forma simple
-    window.sendGAEvent = function (eventName, eventParams = {}) {
-      try {
-        // Crear un elemento de imagen para enviar datos a GA
-        const img = new Image();
-        const params = new URLSearchParams({
-          v: '1',
-          tid: 'G-DWFK5T6NHQ',
-          cid: Math.random().toString(36).substring(2, 15),
-          t: 'event',
-          ec: 'test',
-          ea: eventName,
-          el: JSON.stringify(eventParams),
-          dl: window.location.href,
-          dt: document.title
-        });
-
-        img.src = `https://www.google-analytics.com/collect?${params.toString()}`;
-        console.log('Evento GA enviado (método simple):', eventName, eventParams);
-      } catch (error) {
-        console.error('Error al enviar evento GA:', error);
-      }
-    }
-
-    // Evento de vista de página al cargar
-    document.addEventListener('DOMContentLoaded', () => {
-      sendGAEvent('page_view', {
-        page_title: document.title,
-        page_location: window.location.href,
-        page_path: window.location.pathname
-      });
-    });
-  </script>
-
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -247,14 +201,61 @@
       <div class="info-content">
         <p><strong>Fuente de datos:</strong> <a href="https://www.datos.gov.co/api/views/fgfq-enis/rows.pdf"
             target="_blank">Plataforma Nacional de Datos Abiertos - Ejercito Nacional de Colombia</a></p>
-        <p><strong>Desarrollado por:</strong> Andres García (TECH-ANDGAR) <a href="https://tech-andgar.me"
-            target="_blank">Página web Home</a> & AI (Anthropic, OpenAI, Google)</p>
+        <p>
+          <strong>Desarrollado por:</strong> <a href="https://tech-andgar.me" target="_blank">
+            Andres García (TECH-ANDGAR)
+          </a>
+        </p>
         <p><strong>Última actualización:</strong> <span id="update-date">Abril 2025</span></p>
       </div>
     </div>
   </div>
 
+  <!-- Google Analytics tradicional -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DWFK5T6NHQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
+    gtag('config', 'G-DWFK5T6NHQ');
+  </script>
+
+  <!-- Google Analytics simplificado -->
+  <script>
+    // Función para enviar eventos a GA de forma simple
+    window.sendGAEvent = function (eventName, eventParams = {}) {
+      try {
+        // Crear un elemento de imagen para enviar datos a GA
+        const img = new Image();
+        const params = new URLSearchParams({
+          v: '1',
+          tid: 'G-DWFK5T6NHQ',
+          cid: Math.random().toString(36).substring(2, 15),
+          t: 'event',
+          ec: 'test',
+          ea: eventName,
+          el: JSON.stringify(eventParams),
+          dl: window.location.href,
+          dt: document.title
+        });
+
+        img.src = `https://www.google-analytics.com/collect?${params.toString()}`;
+        console.log('Evento GA enviado (método simple):', eventName, eventParams);
+      } catch (error) {
+        console.error('Error al enviar evento GA:', error);
+      }
+    }
+
+    // Evento de vista de página al cargar
+    document.addEventListener('DOMContentLoaded', () => {
+      sendGAEvent('page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname
+      });
+    });
+  </script>
 </body>
 
 </html>
