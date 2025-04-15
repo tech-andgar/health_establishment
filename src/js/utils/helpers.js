@@ -6,7 +6,7 @@
  * @returns {HTMLElement|null} - The element or null if not found
  */
 export function getElement(id) {
-    return document.getElementById(id);
+	return document.getElementById(id);
 }
 
 /**
@@ -16,9 +16,9 @@ export function getElement(id) {
  * @param {Function} handler - The event handler function
  */
 export function addEventListener(element, event, handler) {
-    if (element) {
-        element.addEventListener(event, handler);
-    }
+	if (element) {
+		element.addEventListener(event, handler);
+	}
 }
 
 /**
@@ -28,9 +28,9 @@ export function addEventListener(element, event, handler) {
  * @param {Function} handler - The event handler function
  */
 export function removeEventListener(element, event, handler) {
-    if (element) {
-        element.removeEventListener(event, handler);
-    }
+	if (element) {
+		element.removeEventListener(event, handler);
+	}
 }
 
 /**
@@ -39,9 +39,9 @@ export function removeEventListener(element, event, handler) {
  * @param {string} html - The HTML to set
  */
 export function setInnerHTML(element, html) {
-    if (element) {
-        element.innerHTML = html;
-    }
+	if (element) {
+		element.innerHTML = html;
+	}
 }
 
 /**
@@ -50,9 +50,9 @@ export function setInnerHTML(element, html) {
  * @param {string} className - The class to add
  */
 export function addClass(element, className) {
-    if (element) {
-        element.classList.add(className);
-    }
+	if (element) {
+		element.classList.add(className);
+	}
 }
 
 /**
@@ -61,9 +61,9 @@ export function addClass(element, className) {
  * @param {string} className - The class to remove
  */
 export function removeClass(element, className) {
-    if (element) {
-        element.classList.remove(className);
-    }
+	if (element) {
+		element.classList.remove(className);
+	}
 }
 
 /**
@@ -72,9 +72,9 @@ export function removeClass(element, className) {
  * @param {string} className - The class to toggle
  */
 export function toggleClass(element, className) {
-    if (element) {
-        element.classList.toggle(className);
-    }
+	if (element) {
+		element.classList.toggle(className);
+	}
 }
 
 /**
@@ -83,9 +83,9 @@ export function toggleClass(element, className) {
  * @param {string} value - The value to set
  */
 export function setInputValue(element, value) {
-    if (element) {
-        element.value = value;
-    }
+	if (element) {
+		element.value = value;
+	}
 }
 
 /**
@@ -94,7 +94,7 @@ export function setInputValue(element, value) {
  * @returns {string} - The value of the input element
  */
 export function getInputValue(element) {
-    return element ? element.value : '';
+	return element ? element.value : '';
 }
 
 /**
@@ -104,5 +104,5 @@ export function getInputValue(element) {
  * @returns {boolean} - Whether the element has the class
  */
 export function hasClass(element, className) {
-    return element ? element.classList.contains(className) : false;
-} 
+	return element ? element.classList.contains(className) : false;
+}

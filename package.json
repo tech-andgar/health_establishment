@@ -1,37 +1,43 @@
 {
-  "name": "health_establishment",
-  "version": "1.0.0",
-  "description": "Aplicación web para visualizar los establecimientos de sanidad militar del ejército colombiano en un mapa interactivo.",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tech-andgar/health_establishment.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tech-andgar/health_establishment/issues"
-  },
-  "homepage": "https://github.com/tech-andgar/health_establishment#readme",
-  "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.4",
-    "postcss-preset-env": "^10.1.5",
-    "rollup-plugin-brotli": "^3.1.0",
-    "rollup-plugin-gzip": "^4.0.1",
-    "rollup-plugin-obfuscator": "^1.1.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "terser": "^5.39.0",
-    "vite": "^6.2.6",
-    "vite-plugin-compression": "^0.5.1"
-  },
-  "dependencies": {
-    "@qwik.dev/partytown": "^0.11.0",
-    "leaflet": "^1.9.4"
-  }
+	"name": "health_establishment",
+	"version": "1.0.0",
+	"description": "Aplicación web para visualizar los establecimientos de sanidad militar del ejército colombiano en un mapa interactivo.",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"check": "biome check --write .",
+		"check:unsafe": "biome check --write --unsafe .",
+		"check:ci": "biome ci ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tech-andgar/health_establishment.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/tech-andgar/health_establishment/issues"
+	},
+	"homepage": "https://github.com/tech-andgar/health_establishment#readme",
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@rollup/plugin-terser": "^0.4.4",
+		"postcss-preset-env": "^10.1.5",
+		"rollup-plugin-brotli": "^3.1.0",
+		"rollup-plugin-gzip": "^4.0.1",
+		"rollup-plugin-obfuscator": "^1.1.0",
+		"rollup-plugin-terser": "^7.0.2",
+		"terser": "^5.39.0",
+		"vite": "^6.2.6",
+		"vite-plugin-compression": "^0.5.1"
+	},
+	"dependencies": {
+		"@qwik.dev/partytown": "^0.11.0",
+		"leaflet": "^1.9.4"
+	}
 }
